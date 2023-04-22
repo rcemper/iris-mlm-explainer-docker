@@ -1,0 +1,14 @@
+FROM python:3.10.11
+
+WORKDIR /code 
+
+COPY requirements.txt /tmp/requirements.txt
+COPY utility.py /tmp/utility.py
+
+RUN python3 -m pip install -r /tmp/requirements.txt
+
+COPY utility.py /tmp/utility.py
+
+RUN cd /tmp && pip3 install utility
+
+WORKDIR /ext

@@ -1,15 +1,31 @@
-version: '3.6'
+version: '3.9'
 services:
+  notebook:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    entrypoint: jupyter notebook 
+                --allow-root
+                --no-browser 
+                --ip 0.0.0.0 
+                --port 8888 
+                --NotebookApp.token='' 
+                --NotebookApp.password='' 
+                --notebook-dir=/ext
+    ports:
+    - 8888:8888
+    - 6006:6006
+    volumes:
+    - ./:/ext
+ 
   py:
     build: 
       context: .
       dockerfile: DockerfilePY
- #   command: python3
     entrypoint: python3 /ext/app.py    
     restart: always
     ports:
       - 8050:8050
       - 5000:5000
-
     volumes:
       - ./:/ext
